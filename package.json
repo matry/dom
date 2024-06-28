@@ -1,0 +1,26 @@
+{
+  "name": "@matry/dom",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/bundle.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/matry/dom.git"
+  },
+  "author": "Daniel Vaughn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matry/dom/issues"
+  },
+  "homepage": "https://github.com/matry/dom#readme",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.18.0"
+  }
+}
