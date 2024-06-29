@@ -8,6 +8,8 @@ but I saw that it could be generally useful, so I'm releasing it under the MIT l
 Right now it's brand new, under active development, and pretty under-powered.
 Don't use it in production.
 
+To see examples of it in action, I've created [a repo with recipes](https://github.com/matry/dom-recipes)
+
 ## Overview
 
 I love React, but it has issues:
