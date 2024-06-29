@@ -20,7 +20,7 @@ I love React, but it has issues:
 6. Getting React to work with SSR has caused lots of headaches
 7. It creates a barrier between the developer and the DOM, leading to a generation of devs missing out on core platform features
 8. There's a ceiling to how performant a React application can be, and maximizing performance requires deep understanding of React's rendering model
-9. Because of React's one-day data flow, there are no built-in features for reading from the UI, even though this is sometimes unavoidable
+9. Because of React's one-way data flow, there are no built-in features for reading from the UI, even though this is sometimes unavoidable
 
 I believe that React's `ui=f(state)` model, while brilliant, is the root cause of many of these issues.
 We should accept the fact that the web is inherently imperative, and this library is a small attempt to make that happen.
