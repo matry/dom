@@ -1,7 +1,7 @@
 {
   "name": "@matry/dom",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A web framework for imperative JSX",
   "main": "dist/bundle.js",
   "type": "module",
   "module": "dist/bundle.js",
