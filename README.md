@@ -24,19 +24,11 @@ I love React, but it has issues:
 8. There's a ceiling to how performant a React application can be, and maximizing performance requires deep understanding of React's rendering model
 9. Because of React's one-way data flow, there are no built-in features for reading from the UI, even though this is sometimes unavoidable
 
-I believe that React's `ui=f(state)` model, while brilliant, is the root cause of many of these issues.
-We should accept the fact that the web is inherently imperative, and this library is a small attempt to make that happen.
+If we accept the fact that the web is inherently imperative,
+then I believe we can resolve most if not all of the above problems.
+We don't need to throw the baby out with the bathwater though, because JSX is awesome.
 
-Matry reconceives of `ui=f(state)` to be `(state=f(data))/ui`,
-meaning that the UI is _a side effect of application state_.
-For complex applications, the state and operations to it are paramount.
-The fact that some application state comes from the UI,
-and the fact that some application state is rendered to the UI,
-is a peripheral fact.
-
-## Guide
-
-Okay so what the heck is "imperative JSX?"
+Okay sure, but what the heck would it mean to have imperative JSX?
 Let's look at some examples.
 
 Matry exposes a handful of simple, standalone functions that allow you to use JSX to create and update the DOM.
