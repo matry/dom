@@ -2,9 +2,32 @@
   "name": "@matry/dom",
   "version": "0.0.2",
   "description": "A web framework for imperative JSX",
-  "main": "dist/bundle.js",
+  "main": "dist/main.js",
   "type": "module",
-  "module": "dist/bundle.js",
+  "module": "dist/main.js",
+  "exports": {
+    ".": {
+      "import": "./dist/bundle.js"
+    },
+    "./append": {
+      "import": "./dist/append.js"
+    },
+    "./attributes": {
+      "import": "./dist/attributes.js"
+    },
+    "./empty": {
+      "import": "./dist/empty.js"
+    },
+    "./jsx-runtime": {
+      "import": "./dist/jsx-runtime.js"
+    },
+    "./remove": {
+      "import": "./dist/remove.js"
+    },
+    "./write": {
+      "import": "./dist/write.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c",

@@ -1,16 +1,23 @@
 import { defineConfig } from 'rollup';
 import terser from '@rollup/plugin-terser';
 
-export default defineConfig([
-  {
-    input: 'src/main.js',
-    output: {
-      file: 'dist/bundle.js',
-      format: 'esm',
-      sourcemap: true,
-    },
-    plugins: [
-      terser(),
-    ],
+const entries = [
+  'main',
+  'append',
+  'empty',
+  'jsx-runtime',
+  'remove',
+  'write',
+];
+
+export default defineConfig(entries.map((entry) => ({
+  input: `src/${entry}.js`,
+  output: {
+    file: `dist/${entry}.js`,
+    format: 'esm',
+    sourcemap: true,
   },
-]);
+  plugins: [
+    terser(),
+  ],
+})));
