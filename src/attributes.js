@@ -7,9 +7,7 @@ export function setAttributes(element) {
   const targetElement = document.getElementById(element.attributes.id);
   if (targetElement) {
     for (const attr in element.attributes) {
-
       if (['value'].includes(attr)) {
-        // @ts-ignore
         targetElement[attr] = element.attributes[attr];
       }
 

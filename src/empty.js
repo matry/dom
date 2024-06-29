@@ -1,6 +1,6 @@
 import { findElementByXPath, getTextContent } from './utils';
 
-export function empty(element) {
+export function empty(element, parent) {
   let targetElement;
 
   if (typeof element === 'string') {
@@ -16,22 +16,31 @@ export function empty(element) {
 
   if (element.children.length) {
     for (const child of element.children) {
-      empty(child);
+      empty(child, element);
     }
     return;
   }
 
-  const xpath = [];
+  const xpathQuery = [];
   for (const attr in element.attributes) {
-    xpath.push(`@${attr}="${element.attributes[attr]}"`);
+    xpathQuery.push(`@${attr}="${element.attributes[attr]}"`);
   }
 
   const textContent = getTextContent(element);
   if (textContent) {
-    xpath.push(`text()="${textContent}"`);
+    xpathQuery.push(`text()="${textContent}"`);
   }
 
-  targetElement = findElementByXPath(`//${element.tagName}[${xpath.join(' and ')}]`);
+  const xPathStr = ['/'];
+  if (parent) {
+    if (parent.attributes.id) {
+      xPathStr.push(`${parent.tagName}[@id="${parent.attributes.id}"]`);
+    }
+  }
+
+  xPathStr.push(`${element.tagName}[${xpathQuery.join(' and ')}]`)
+
+  targetElement = findElementByXPath(xPathStr.join('/'));
 
   for (const targetEl of targetElement) {
     if (targetEl instanceof HTMLElement) {
