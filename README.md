@@ -166,6 +166,25 @@ The result of the above would be:
 </main>
 ```
 
+## Tradeoffs
+
+As with all technology, there are advantages and disadvantages of this approach.
+In the interest of being transparent, I'll list the disadvantages first.
+
+#### disadvantages
+
+1. Since JSX is acting as a query, the queries have limited expressive power. For instance, in order to match against a node in the DOM, it must be an exact match, i.e. there can be no "contains" queries as it would introduce too many edge cases.
+2. There will be duplication of html content, at least in terms of code. While this can be reduced by various strategies, it's kind of unavoidable.
+3. You have to really _think_ about the UI, which is something you may not be used to if you're used to React. I'd argue this is a good thing, but it won't be everyone's cup of tea.
+4. It doesn't define how you procure your state, whereas React tends to be a bit more opinionated. This can lead to more architectural work needed for developers. Again, I'd argue this is a net good, but YMMV.
+
+#### advantages
+
+1. You have complete control over the rendering process, and can make Matry applications are performant as you want
+2. Matry doesn't "own" the UI you pass to JSX, so you can easily use common libraries (e.g. the Google Maps SDK) without worry. Heck, you can even render to the `html`, `head`, and `body` elements!
+3. The functions offered by Matry - `write()`, `append()`, `setAttributes()` and others - are mirror counterparts to native DOM methods, meaning you can think about the platform. There's no such thing as "thinking in Matry", it's just "thinking in the web."
+4. In this example I used a `model` object in Typescript to store my state, but that was just as a demonstration. You can use whatever you want, because Matry is _literally_ just a UI library.
+
 ## Getting Started
 
 First, install the package.
