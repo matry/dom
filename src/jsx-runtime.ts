@@ -1,6 +1,11 @@
+import type { Component, VirtualNode } from '../types';
 
 export const jsx = {
-  component(component, props, ...children) {
+  component(
+    component: string | Component,
+    props: Record<string, any> | null,
+    ...children: VirtualNode[]
+  ): VirtualNode {
     if (!props) {
       props = {};
     }
@@ -12,7 +17,7 @@ export const jsx = {
       });
     }
 
-    const element = {
+    const element: VirtualNode = {
       tagName: component,
       attributes: {},
       events: {},

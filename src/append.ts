@@ -1,7 +1,8 @@
+import type { VirtualNode, VirtualNodeAppendee } from '../types';
 import { captureAppendees, convertElementNodeToHTML } from './utils';
 
-export function append(element) {
-  const appendees = captureAppendees(element);
+export function append(virtualNode: VirtualNode): void {
+  const appendees: VirtualNodeAppendee[] = captureAppendees(virtualNode);
 
   for (const appendee of appendees) {
     switch (appendee.relationship) {

@@ -1,6 +1,7 @@
+import type { VirtualNode } from '../types';
 import { convertElementNodeToHTML } from './utils';
 
-export function write(target, element) {
+export function write(target: Node | string, virtualNode: VirtualNode): void {
   let targetElement;
   if (typeof target === 'string') {
     targetElement = document.getElementById(target);
@@ -12,5 +13,5 @@ export function write(target, element) {
     return;
   }
 
-  targetElement?.appendChild(convertElementNodeToHTML(element));
+  targetElement?.appendChild(convertElementNodeToHTML(virtualNode));
 }
