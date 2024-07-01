@@ -28,8 +28,11 @@ export const jsx = {
     }
 
     element.children = children.flat(Infinity).map((c) => {
-      // in some cases this value can be a number, but we don't want to add that to the type definition
-      return typeof c === 'object' ? c : c.toString();
+      if (typeof c === 'object' && c.hasOwnProperty('tagName')) {
+        return c;
+      }
+
+      return c.toString();
     });
 
     return element;

@@ -1,7 +1,7 @@
 
 export function getTextContent(element) {
   if (typeof element === 'string') {
-    return null;
+    return '';
   }
 
   let str = '';
@@ -9,11 +9,11 @@ export function getTextContent(element) {
     if (typeof child === 'string') {
       str += child;
     } else {
-      break;
+      return '';
     }
   }
 
-  return str || null;
+  return str;
 }
 
 export function convertElementNodeToHTML(obj) {
@@ -43,7 +43,7 @@ export function convertElementNodeToHTML(obj) {
 
 export function captureAppendees(
   obj,
-  parentNode = null,
+  parentNode = document,
   results = [],
 ) {
   if (typeof obj === 'string') {
@@ -58,14 +58,7 @@ export function captureAppendees(
     return results;
   }
 
-  let targetElement;
-
-  if (parentNode) {
-    targetElement = parentNode.querySelector(`#${obj.attributes.id}`);
-  } else {
-    targetElement = document.getElementById(obj.attributes.id);
-  }
-
+  const targetElement = parentNode.querySelector(`#${obj.attributes.id}`);
   if (targetElement) {
     for (const child of obj.children) {
       results = captureAppendees(child, targetElement, results);
@@ -84,14 +77,15 @@ export function captureAppendees(
   return results;
 }
 
-export function findElementByXPath(xpath) {
+export function findElementByXPath(xpath, contextNode) {
   const result = document.evaluate(
     xpath,
-    document,
+    contextNode,
     null,
     XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
     null,
   );
+
   const nodes = [];
   for (let i = 0; i < result.snapshotLength; i++) {
     nodes.push(result.snapshotItem(i));
