@@ -4,7 +4,7 @@ import { setAttributes } from './attributes';
 import { empty } from './empty';
 import { remove } from './remove';
 import { write } from './write';
-import { capture, getFragmentLeaves, collectElements, finder, getVirtualPaths } from './capture';
+import { capture, getFragmentLeaves, collectElements, finder, getVirtualPaths, convertVirtualPathToXPath, findElementsByXPath } from './capture';
 
 export { jsx };
 export { append };
@@ -12,4 +12,4 @@ export { setAttributes };
 export { empty };
 export { remove };
 export { write };
-export { capture, getFragmentLeaves, collectElements, finder, getVirtualPaths };
+export { capture, getFragmentLeaves, collectElements, finder, getVirtualPaths, convertVirtualPathToXPath, findElementsByXPath };

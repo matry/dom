@@ -102,15 +102,28 @@ export function hasChildElements(vFragment) {
 export function getVirtualPaths(vFragment) {
   const paths = [];
 
-  function walk(childFragment, accumulator) {
-    const path = [...accumulator, childFragment];
+  function walk(childFragment, accumulator, relationship = 'root') {
+    const path = [...accumulator, { fragment: childFragment, relationship }];
+
     if (typeof childFragment === 'string' || !childFragment.children.length) {
       paths.push(path);
       return;
     }
 
-    childFragment.children.map((child) => {
-      walk(child, path);
+    childFragment.children.forEach((child, i) => {
+      if (i === 0) {
+        walk(child, path, 'child');
+        return;
+      }
+
+      for (let x = 0; x < i; x++) {
+        path.push({
+          fragment: childFragment.children[x],
+          relationship: x === 0 ? 'child' : 'next',
+        })
+      }
+
+      walk(child, path, 'next');
     });
   }
 
@@ -118,8 +131,6 @@ export function getVirtualPaths(vFragment) {
 
   return paths;
 }
-
-
 
 
 
@@ -161,13 +172,46 @@ export function finder(vFragment, contextElement) {
   return results;
 }
 
+export function convertVirtualPathToXPath(virtualPath) {
+  const subPaths = [];
 
+  virtualPath.forEach((subPath, i) => {
+    const vFragment = subPath.fragment;
 
+    if (typeof vFragment === 'string') {
+      return;
+    }
 
+    const attributeKeys = Object.keys(vFragment.attributes);
+    const textContent = getTextContent(vFragment);
 
+    const xpathQuery = [];
+    for (const attrKey of attributeKeys) {
+      xpathQuery.push(`@${attrKey}="${vFragment.attributes[attrKey]}"`);
+    }
 
+    if (textContent) {
+      xpathQuery.push(`text()="${textContent}"`);
+    }
 
+    let prefix = '';
+    if (subPath.relationship === 'next') {
+      prefix = 'following-sibling::'
+    }
 
+    if (xpathQuery.length) {
+      subPaths.push(`${prefix}${vFragment.tagName}[${xpathQuery.join(' and ')}]`);
+    } else {
+      subPaths.push(`${prefix}${vFragment.tagName}`);
+    }
+  });
+
+  return `//${subPaths.join('//')}`;
+}
+
+export function findElementsByXPath(xPath) {
+  return findElementByXPath(xPath, document);
+}
 
 export function findElementsByVirtualFragment(vFragment, parentElement = null) {
   if (parentElement === null) {
