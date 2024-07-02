@@ -14,6 +14,7 @@ export const jsx = {
 
     const element = {
       tagName: component,
+      key: null,
       attributes: {},
       events: {},
       children: [],
@@ -22,6 +23,8 @@ export const jsx = {
     for (const k in props) {
       if (typeof props[k] === 'function') {
         element.events[k] = props[k];
+      } else if (k === 'key') {
+        element.key = props[k];
       } else {
         element.attributes[k] = props[k];
       }

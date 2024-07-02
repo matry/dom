@@ -1,39 +1,17 @@
-import { findElementByXPath, getTextContent } from './utils';
+import { convertVirtualPathToXPath, findElementsByXPath, getVirtualPaths } from './utils';
 
-export function remove(element) {
-  let targetElement;
+export function remove(virtualFragment) {
+  const virtualPaths = getVirtualPaths(virtualFragment);
+  const xPaths = virtualPaths.map(convertVirtualPathToXPath);
 
-  if (typeof element === 'string') {
-    targetElement = findElementByXPath(`//*[text()="${element}"]`);
-
-    if (targetElement.length) {
-      for (const el of targetElement) {
-        el?.parentElement?.removeChild(el);
+  for (const xPath of xPaths) {
+    const elements = findElementsByXPath(xPath);
+    for (const element of elements) {
+      if (!element || element.nodeType !== 1) {
+        break;
       }
+
+      element.remove();
     }
-    return;
-  }
-
-  if (element.children.length) {
-    for (const child of element.children) {
-      remove(child);
-    }
-    return;
-  }
-
-  const xpath = [];
-  for (const attr in element.attributes) {
-    xpath.push(`@${attr}="${element.attributes[attr]}"`);
-  }
-
-  const textContent = getTextContent(element);
-  if (textContent) {
-    xpath.push(`text()="${textContent}"`);
-  }
-
-  targetElement = findElementByXPath(`//${element.tagName}[${xpath.join(' and ')}]`);
-
-  for (const targetEl of targetElement) {
-    targetEl?.parentElement?.removeChild(targetEl);
   }
 }

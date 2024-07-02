@@ -31,3 +31,45 @@ a hectal structure:
   },
 }
 ```
+
+`updateTextContent()`
+^ this means that we identify the nodes based on everything _except_ the text content, so:
+
+- node name
+- id
+- attributes
+- key (optional)
+
+`updateAttributes()`
+^ this means that we identify the nodes based on everything _except_ the attributes, so:
+
+- node name
+- id (this is an attribute but it receives special treatment)
+- text content
+- key (optional)
+
+the types of modifications are:
+
+### TREE MODIFICATIONS
+
+- append element(s)
+- remove element(s)
+- empty element's children
+- replace element(s)
+- replace element(s) children
+- change element's tagName
+- move element
+- swap two elements
+
+### ATTRIBUTE MODIFICATIONS
+
+- change element's attributes
+- remove element's attributes
+- add element's attributes
+- append to element attribute
+
+### CONTENT MODIFICATIONS
+
+- append text content to element
+- replace element's text content
+- remove element's text content

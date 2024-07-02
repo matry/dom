@@ -4,9 +4,8 @@ Imperative JSX - a new way to think about UI engineering.
 
 This project was initially created for the Matry web app,
 but I saw that it could be generally useful, so I'm releasing it under the MIT license.
-
 Right now it's brand new, under active development, and pretty under-powered.
-Don't use it in production.
+Do _not_ use it in production until it reaches `v1.0.0`.
 
 To see examples of it in action, I've created [a repo with recipes](https://github.com/matry/dom-recipes)
 
@@ -22,149 +21,73 @@ I love React, but it has issues:
 6. Getting React to work with SSR has caused lots of headaches
 7. It creates a barrier between the developer and the DOM, leading to a generation of devs missing out on core platform features
 8. There's a ceiling to how performant a React application can be, and maximizing performance requires deep understanding of React's rendering model
-9. Because of React's one-way data flow, there are no built-in features for reading from the UI, even though this is sometimes unavoidable
+9. Because of React's one-way data flow, there are no built-in features for reading the state of the UI
 
 If we accept the fact that the web is inherently imperative,
 then I believe we can resolve most if not all of the above problems.
-We don't need to throw the baby out with the bathwater though, because JSX is awesome.
+We don't need to throw the baby out with the bathwater though, because JSX is fantastic.
 
-Okay sure, but what the heck would it mean to have imperative JSX?
-Let's look at some examples.
+Matry exposes a handful of simple, standalone functions that allow you to use JSX to imperatively create and update the DOM.
+This is a significant departure from how JSX is traditionally used,
+but the benefits of this approach is that your UI remains declarative,
+while your business logic remains imperative.
+This means no more hooks, no more context, no more prop drilling.
 
-Matry exposes a handful of simple, standalone functions that allow you to use JSX to create and update the DOM.
-These functions are meant to mirror their native equivalents, and their naming reflects that design principle.
+Below are the functions provided by `@matry/dom`:
 
-Currently, the functions are `write()`, `append()`, `setAttributes()`, `remove()`, and `empty()`.
-We'll go through each of them.
+1. [Replace](docs/replace.md) - replaces one or more elements' children
+2. [Append](docs/append.md) - appends new elements
+3. [Remove](docs/remove.md) - removes elements
+4. [Swap](docs/swap.md) - swaps two elements
+5. [Reverse](docs/reverse.md) - reverses a list of sibling elements
+6. [Set Content](docs/set-content.md) - sets the text content of one or more elements
+7. [Set Attributes](docs/set-attributes.md) - sets attributes of one or more elements
+8. [Remove Attributes](docs/remove-attributes.md) - removes attributes from one or more elements
+9. [Add Event Listeners](docs/add-event-listeners.md) - adds event listeners to one or more elements
+10. [Remove Event Listeners](docs/remove-event-listeners.md) - removes event listeners from one or more elements
 
-### 1. Write
+## Quick Tour
 
-The write function takes an existing element and wholesale replaces its inner content.
-You can think of this as akin to `document.write`.
-Use this when you're performing an initial client-side render.
+Below is a simple counter demo.
+
+```html
+<!-- initial html -->
+<html>
+  <head>
+    <title>My Counter App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+```
 
 ```jsx
-write(
-  document.getElementById("app"),
+// set our initial value
+let count = 0;
+
+// perform our initial render
+replace(
   <main>
-    <ul id="fruits">
-      <li>apple</li>
-    </ul>
+    <div>
+      <p key="counter">The count is {count}</p>
+      <button onclick={add}>add 1</button>
+    </div>
   </main>
 );
+
+// replace the text content
+function add() {
+  count++;
+  setContent(<p key="counter">The count is {count}</p>);
+}
 ```
 
-### 2. Append
-
-The append function adds new elements to the DOM (similar to `appendChild`).
-Notice in this example that we pass in the same `<ul id="fruits" />` element as we did in the `write()` call.
-This does _not_ re-add the element, because it already exists in the DOM.
-
-```jsx
-append(
-  <ul id="fruits">
-    <li>orange</li>
-  </ul>
-);
-```
-
-The result of this call will be the following HTML:
-
-```html
-<main>
-  <ul id="fruits">
-    <li>apple</li>
-    <li>orange</li>
-  </ul>
-</main>
-```
-
-### 3. Set Attributes
-
-As the name suggests, this function will set any attribute you define in the JSX you pass in.
-
-```jsx
-setAttributes(
-  <ul id="fruits">
-    <li class="selected">orange</li>
-  </ul>
-);
-```
-
-Result:
-
-```html
-<main>
-  <ul id="fruits">
-    <li>apple</li>
-    <li class="selected">orange</li>
-  </ul>
-</main>
-```
-
-### 4. Remove
-
-This function removes elements from the DOM.
-The behavior here is a bit nuanced, so we'll show two examples:
-
-```jsx
-remove(
-  <ul id="fruits">
-    <li class="selected" />
-  </ul>
-);
-```
-
-The above code will remove the list item that has the `selected` class,
-and would result in the following html:
-
-```html
-<main>
-  <ul id="fruits">
-    <li>apple</li>
-  </ul>
-</main>
-```
-
-If, however, we instead passed in the following JSX:
-
-```jsx
-remove(
-  <ul id="fruits">
-    <li>apple</li>
-  </ul>
-);
-```
-
-Then the resulting html would be the following:
-
-```html
-<main>
-  <ul id="fruits">
-    <li></li>
-    <li class="selected">orange</li>
-  </ul>
-</main>
-```
-
-This is because it will remove the most descendent and identifiable node that you pass into the JSX.
-In this case, we passed in the `apple` content, which means that we want to remove the text node within the first `<li>` element.
-
-### 5. Empty
-
-Empty is just like `remove()`, but instead of removing the target element, it will empty out its contents:
-
-```jsx
-empty(<ul id="fruits" />);
-```
-
-The result of the above would be:
-
-```html
-<main>
-  <ul id="fruits"></ul>
-</main>
-```
+In the above example,
+we call `replace` to render our UI into the `#app` element.
+Then we use `setContent` to update the content of the `p` element.
+Notice when updating the DOM, we only need to pass in just enough JSX to identify which elements we want to modify.
+This puts you in _complete control_ of your apps performance.
 
 ## Tradeoffs
 
@@ -176,14 +99,14 @@ In the interest of being transparent, I'll list the disadvantages first.
 1. Since JSX is acting as a query, the queries have limited expressive power. For instance, in order to match against a node in the DOM, it must be an exact match, i.e. there can be no "contains" queries as it would introduce too many edge cases.
 2. There will be duplication of html content, at least in terms of code. While this can be reduced by various strategies, it's kind of unavoidable.
 3. You have to really _think_ about the UI, which is something you may not be used to if you're used to React. I'd argue this is a good thing, but it won't be everyone's cup of tea.
-4. It doesn't define how you procure your state, whereas React tends to be a bit more opinionated. This can lead to more architectural work needed for developers. Again, I'd argue this is a net good, but YMMV.
+4. It doesn't define how you procure your state, whereas React tends to be a bit more opinionated. This can lead to more architectural work needed for developers. I'd again argue this is a net good, but you can decide for yourself whether this is something you want.
 
 #### advantages
 
-1. You have complete control over the rendering process, and can make Matry applications are performant as you want
+1. You have complete control over the rendering process, and can make Matry applications as performant as you want.
 2. Matry doesn't "own" the UI you pass to JSX, so you can easily use common libraries (e.g. the Google Maps SDK) without worry. Heck, you can even render to the `html`, `head`, and `body` elements!
 3. The functions offered by Matry - `write()`, `append()`, `setAttributes()` and others - are mirror counterparts to native DOM methods, meaning you can think about the platform. There's no such thing as "thinking in Matry", it's just "thinking in the web."
-4. In this example I used a `model` object in Typescript to store my state, but that was just as a demonstration. You can use whatever you want, because Matry is _literally_ just a UI library.
+4. Unlike React, Matry is truly a "UI library." It has no side effects that require you to structure your code or your data in any particular way.
 
 ## Getting Started
 
@@ -225,10 +148,8 @@ There are lots of features yet to be implemented - stay tuned!
 Some things I have planned for the library:
 
 - TypeScript support
-- `swap()` for swapping two elements
 - `move()` for moving elements around
 - `paint()` for updating the CSSOM
 - `serialize()` for rendering JSX to a string (primarily for SSR)
 - `deserialize()` for rendering a string (will be used in respones from SSR updates)
-- `addEventListeners()` for hydrating static html from the server
 - `read()` for loading data from static html into JS memory
