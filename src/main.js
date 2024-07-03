@@ -3,6 +3,7 @@ import { append } from './append';
 import { empty } from './empty';
 import { remove } from './remove';
 import { replace } from './replace';
+import { swap } from './swap';
 import { setAttributes } from './set-attributes';
 import { removeAttributes } from './remove-attributes';
 import { addEventListeners } from './add-event-listeners';
@@ -15,6 +16,7 @@ export {
   empty,
   remove,
   replace,
+  swap,
   setAttributes,
   removeAttributes,
   addEventListeners,
