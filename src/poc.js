@@ -73,17 +73,8 @@ export function collectElements(vFragment, parentElement) {
     for (const childFragment of vFragment.children) {
       let childResults = [];
 
-      console.log('iterating through child fragment:');
-      console.log(childFragment);
-
       for (const queryResult of queryResults) {
-        console.log('iterating through query result:');
-        console.log(queryResult);
-
         const elements = collectElements(childFragment, queryResult);
-
-        console.log('found child elements:');
-        console.log(elements);
 
         if (elements.length) {
           childResults = childResults.concat(elements);

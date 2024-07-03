@@ -18,13 +18,13 @@ export function hasChildElements(vFragment) {
   return hasChildElements;
 }
 
-export function getTextContent(element) {
-  if (typeof element === 'string') {
+export function getTextContent(virtualFragment) {
+  if (typeof virtualFragment === 'string') {
     return '';
   }
 
   let str = '';
-  for (const child of element.children) {
+  for (const child of virtualFragment.children) {
     if (typeof child === 'string') {
       str += child;
     } else {
@@ -213,8 +213,10 @@ export function convertVirtualPathToXPath(virtualPath, options = {}) {
       }
     }
 
-    if (textContent) {
-      xpathQuery.push(`text()="${textContent}"`);
+    if (options.exclude !== 'content') {
+      if (textContent) {
+        xpathQuery.push(`text()="${textContent}"`);
+      }
     }
 
     let prefix = '';

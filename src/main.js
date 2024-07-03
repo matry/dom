@@ -4,6 +4,7 @@ import { empty } from './empty';
 import { remove } from './remove';
 import { replace } from './replace';
 import { swap } from './swap';
+import { setContent } from './set-content';
 import { setAttributes } from './set-attributes';
 import { removeAttributes } from './remove-attributes';
 import { addEventListeners } from './add-event-listeners';
@@ -17,6 +18,7 @@ export {
   remove,
   replace,
   swap,
+  setContent,
   setAttributes,
   removeAttributes,
   addEventListeners,

@@ -39,12 +39,11 @@ Below are the functions provided by `@matry/dom`:
 2. [Append](docs/append.md) - appends new elements
 3. [Remove](docs/remove.md) - removes elements
 4. [Swap](docs/swap.md) - swaps two elements
-5. [Reverse](docs/reverse.md) - reverses a list of sibling elements
-6. [Set Content](docs/set-content.md) - sets the text content of one or more elements
-7. [Set Attributes](docs/set-attributes.md) - sets attributes of one or more elements
-8. [Remove Attributes](docs/remove-attributes.md) - removes attributes from one or more elements
-9. [Add Event Listeners](docs/add-event-listeners.md) - adds event listeners to one or more elements
-10. [Remove Event Listeners](docs/remove-event-listeners.md) - removes event listeners from one or more elements
+5. [Set Content](docs/set-content.md) - sets the text content of one or more elements
+6. [Set Attributes](docs/set-attributes.md) - sets attributes of one or more elements
+7. [Remove Attributes](docs/remove-attributes.md) - removes attributes from one or more elements
+8. [Add Event Listeners](docs/add-event-listeners.md) - adds event listeners to one or more elements
+9. [Remove Event Listeners](docs/remove-event-listeners.md) - removes event listeners from one or more elements
 
 ## Quick Tour
 
@@ -148,7 +147,7 @@ There are lots of features yet to be implemented - stay tuned!
 Some things I have planned for the library:
 
 - TypeScript support
-- `move()` for moving elements around
+- `reverse()` for reversing lists of elements
 - `paint()` for updating the CSSOM
 - `serialize()` for rendering JSX to a string (primarily for SSR)
 - `deserialize()` for rendering a string (will be used in respones from SSR updates)
