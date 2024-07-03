@@ -1,7 +1,7 @@
 import { captureAppendees, convertElementNodeToHTML } from './utils';
 
-export function append(element) {
-  const appendees = captureAppendees(element);
+export function append(virtualFragment) {
+  const appendees = captureAppendees(virtualFragment);
 
   for (const appendee of appendees) {
     switch (appendee.relationship) {

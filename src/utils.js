@@ -63,15 +63,15 @@ export function convertElementNodeToHTML(obj) {
 }
 
 export function captureAppendees(
-  obj,
-  parentNode = document,
+  virtualFragment,
+  contextNode = document,
   results = [],
 ) {
-  if (typeof obj === 'string') {
-    if (parentNode !== null) {
+  if (typeof virtualFragment === 'string') {
+    if (contextNode !== null) {
       results.push({
-        target: parentNode,
-        appendee: obj,
+        target: contextNode,
+        appendee: virtualFragment,
         relationship: 'child',
       });
     }
@@ -79,17 +79,17 @@ export function captureAppendees(
     return results;
   }
 
-  const targetElement = parentNode.querySelector(`#${obj.attributes.id}`);
+  const targetElement = contextNode.querySelector(`#${virtualFragment.attributes.id}`);
   if (targetElement) {
-    for (const child of obj.children) {
+    for (const child of virtualFragment.children) {
       results = captureAppendees(child, targetElement, results);
     }
 
   } else {
-    if (parentNode) {
+    if (contextNode) {
       results.push({
-        target: parentNode,
-        appendee: obj,
+        target: contextNode,
+        appendee: virtualFragment,
         relationship: 'child',
       });
     }
