@@ -17,13 +17,7 @@ Where exactly it will be inserted depends on the position of the first non-match
    then it will be appended as the next element sibling of the matching node.
 2. If the fragment has a next fragment sibling that has a matching node,
    then it will be appended as the previous element sibling of the matching node.
-3. If the fragment has a previous fragment sibling that is a text fragment of the string "...",
-   then it is considered to be a wildcard,
-   and thus the fragment will be appended as the last element in the node list.
-4. If the fragment has a next fragment sibling that is a text fragment of the string "...",
-   then it is considered to be a wildcard,
-   and thus the fragment will be appended as the first element in the node list.
-5. If all previous conditions fail to match,
+3. If previous conditions fail to match,
    then the element will be appended as the last element child.
 
 Fragments in an `append()` call will only match on the following conditions:
@@ -66,41 +60,6 @@ append(
       <li>banana</li>
       <li>apple</li>
       <li>cherry</li>
-    </ul>
-  </div>
-</main>
-```
-
-As you can see,
-Matry doesn't require you to re-write the entire html tree,
-only the minimal structure needed to uniquely identify the nodes you want to target.
-
-In this case, because we did not provide any siblings for the "cherry" list item,
-it defaulted to being appended as the last element child.
-
-If instead we had written this:
-
-```jsx
-// jsx
-append(
-  <ul data-type="fruits">
-    <li>cherry</li>
-    ...
-  </ul>
-);
-```
-
-Then the result would have been:
-
-```html
-<!-- result html -->
-<main>
-  <div id="app">
-    <ul data-type="fruits">
-      <li>cherry</li>
-      <li>orange</li>
-      <li>banana</li>
-      <li>apple</li>
     </ul>
   </div>
 </main>
