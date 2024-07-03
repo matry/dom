@@ -22,6 +22,10 @@ export function setAttributes(virtualFragment) {
             element[attrKey] = value;
           } else {
             element.setAttribute(attrKey, value);
+
+            if (attrKey in element) {
+              element[attrKey] = value;
+            }
           }
         }
       }
