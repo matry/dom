@@ -14,6 +14,7 @@ export const jsx = {
 
     const element = {
       tagName: component,
+      key: null,
       attributes: {},
       events: {},
       children: [],
@@ -22,14 +23,19 @@ export const jsx = {
     for (const k in props) {
       if (typeof props[k] === 'function') {
         element.events[k] = props[k];
+      } else if (k === 'key') {
+        element.key = props[k];
       } else {
         element.attributes[k] = props[k];
       }
     }
 
     element.children = children.flat(Infinity).map((c) => {
-      // in some cases this value can be a number, but we don't want to add that to the type definition
-      return typeof c === 'object' ? c : c.toString();
+      if (typeof c === 'object' && c.hasOwnProperty('tagName')) {
+        return c;
+      }
+
+      return c.toString();
     });
 
     return element;
