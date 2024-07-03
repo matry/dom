@@ -35,27 +35,26 @@ export function getTextContent(virtualFragment) {
   return str;
 }
 
-export function convertElementNodeToHTML(obj) {
+export function convertVirtualFragmentToHtml(virtualFragment) {
   let node;
 
-  if (typeof obj === 'string') {
-    node = document.createTextNode(obj);
+  if (typeof virtualFragment === 'string') {
+    node = document.createTextNode(virtualFragment);
   } else {
-    node = document.createElement(obj.tagName);
+    node = document.createElement(virtualFragment.tagName);
 
-    for (const attr in obj.attributes) {
-      node.setAttribute(attr, obj.attributes[attr]);
+    for (const attr in virtualFragment.attributes) {
+      node.setAttribute(attr, virtualFragment.attributes[attr]);
     }
 
-    for (const event in obj.events) {
-      // @ts-ignore
-      node[event] = obj.events[event];
+    for (const event in virtualFragment.events) {
+      node[event] = virtualFragment.events[event];
     }
 
-    node['key'] = obj.key;
+    node['key'] = virtualFragment.key;
 
-    for (const childElementNode of obj.children) {
-      node.appendChild(convertElementNodeToHTML(childElementNode));
+    for (const childElementNode of virtualFragment.children) {
+      node.appendChild(convertVirtualFragmentToHtml(childElementNode));
     }
   }
 

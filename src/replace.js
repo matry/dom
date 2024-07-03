@@ -1,4 +1,4 @@
-import { convertElementNodeToHTML, findElementsByVirtualFragment } from './utils';
+import { convertVirtualFragmentToHtml, findElementsByVirtualFragment } from './utils';
 
 export function replace(virtualFragment) {
   if (!virtualFragment || typeof virtualFragment === 'string') {
@@ -12,7 +12,7 @@ export function replace(virtualFragment) {
       return;
     }
 
-    const childElements = virtualFragment.children.map(convertElementNodeToHTML);
+    const childElements = virtualFragment.children.map(convertVirtualFragmentToHtml);
     element.replaceChildren(...childElements);
   }
 }

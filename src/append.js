@@ -1,4 +1,4 @@
-import { captureAppendees, convertElementNodeToHTML } from './utils';
+import { captureAppendees, convertVirtualFragmentToHtml } from './utils';
 
 export function append(virtualFragment) {
   const appendees = captureAppendees(virtualFragment);
@@ -7,7 +7,7 @@ export function append(virtualFragment) {
     switch (appendee.relationship) {
       case 'child':
         window.requestAnimationFrame(() => {
-          appendee.target.appendChild(convertElementNodeToHTML(appendee.appendee));
+          appendee.target.appendChild(convertVirtualFragmentToHtml(appendee.appendee));
         });
         break;
       case 'next':
