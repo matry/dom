@@ -56,9 +56,7 @@ Below is a simple counter demo.
     <title>My Counter App</title>
   </head>
   <body>
-    <main>
-      <div id="app"></div>
-    </main>
+    <main></main>
   </body>
 </html>
 ```
@@ -69,10 +67,10 @@ let count = 0;
 
 // perform our initial render
 replace(
-  <div id="app">
+  <main>
     <p key="counter">The count is {count}</p>
     <button onclick={add}>add 1</button>
-  </div>
+  </main>
 );
 
 // replace the text content
