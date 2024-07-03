@@ -1,8 +1,8 @@
 # @matry/dom
 
-Imperative JSX - a new way to think about UI engineering.
+A web framework for imperative JSX - a new way to think about UI engineering.
 
-This project was initially created for the Matry web app,
+I initially created this for the Matry web editor,
 but I saw that it could be generally useful, so I'm releasing it under the MIT license.
 Right now it's brand new, under active development, and pretty under-powered.
 Do _not_ use it in production until it reaches `v1.0.0`.
@@ -29,7 +29,7 @@ We don't need to throw the baby out with the bathwater though, because JSX is fa
 
 Matry exposes a handful of simple, standalone functions that allow you to use JSX to imperatively create and update the DOM.
 This is a significant departure from how JSX is traditionally used,
-but the benefits of this approach is that your UI remains declarative,
+but the benefit of this approach is that your UI remains declarative,
 while your business logic remains imperative.
 This means no more hooks, no more context, no more prop drilling.
 
@@ -81,7 +81,7 @@ function add() {
 ```
 
 In the above example,
-we call `replace` to render our UI into the `#app` element.
+we call `replace` to render our UI into the `main` element.
 Then we use `setContent` to update the content of the `p` element.
 Notice when updating the DOM, we only need to pass in just enough JSX to identify which elements we want to modify.
 This puts you in _complete control_ of your apps performance.
@@ -111,8 +111,8 @@ First, install the package.
 Vite is recommended, mostly because that's what I've used to test it with :p
 
 ```bash
-npm create vite my-matry-project # choose Vanilla, then JavaScript (for now)
-cd my-matry-project
+npm create vite whatever # choose Vanilla, then JavaScript (for now)
+cd whatever
 npm install @matry/dom
 ```
 
