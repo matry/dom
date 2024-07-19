@@ -2,6 +2,10 @@
 
 A web framework for imperative JSX - a new way to think about UI engineering.
 
+```
+npm install @matry/dom
+```
+
 I initially created this for the [Matry editor](https://matry.design),
 but I saw that it could be generally useful, so I'm releasing it under the MIT license.
 Right now it's brand new, under active development, and pretty under-powered.
