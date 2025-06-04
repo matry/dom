@@ -1,6 +1,6 @@
 # @matry/dom
 
-A web framework for imperative JSX - a new way to think about UI engineering.
+A web framework for imperative JSX - another way to think about UI engineering.
 
 ```
 npm install @matry/dom
